@@ -1,0 +1,45 @@
+""This will calculate someone's blood alcohol content after taking their input on weight, gender, amount of drinks, and drinking period"""
+
+def BAC_Calculator():
+    gender = input('What is your gender? (M/F):  ')
+    while gender not in ['M','F']:
+        gender = input('Please enter a valid gender (M/F):  ')
+    weight_lbs = input('What is your weight in lbs?  ')
+    drinknum = int(input('How many drinks?  '))
+    drinkingperiod = int(input('How quickly are you drinking? (in hours)  '))
+    bwconst = 0.0
+    metabolicconst = 0.0
+    weight_kg = float(weight_lbs) / 2.2
+
+    if gender == 'M':
+     bwconst = 0.58
+     metabolicconst = 0.015
+    elif gender == 'F':
+     bwconst = 0.49
+     metabolicconst = 0.017
+     
+    
+
+    bac = lambda: str(((0.806 * drinknum * 1.2) / (bwconst * weight_kg)) - (metabolicconst * drinkingperiod))
+    bacnum = bac()[:5]
+    
+
+    print("If a {} at {} drank {} drinks in {} hour(s), they would have a BAC of {}".format(gender,weight_lbs,drinknum,drinkingperiod,bacnum))
+    
+    if float(bacnum) > 0.08:
+        print('At this BAC, it would be illegal for you to drive in the United States.')
+    if float(bacnum) > 0.4:
+        print('At this BAC, the likelihood of death is very high.')
+    if float(bacnum) > 2:
+        print('This is higher than any BAC ever recorded in a living person. Also, you would have died a long time ago.')
+        
+    while float(bacnum) < 0.5:
+        drinknum += 1
+        bac()
+    
+    print('You would need to drink {} drinks to cease living!'.format(drinknum))
+
+const = 'Y'
+while const == 'Y':
+    BAC_Calculator()
+    const = input('Continue? Y/N:  ')
